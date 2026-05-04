@@ -30,7 +30,7 @@ TableLens injects a lightweight toolbar alongside any HTML `<table>`. Click the 
 ## Getting Started (Development)
 
 ```bash
-git clone https://github.com/RANJITH1708/TableLens.git
+git clone https://github.com/RANJITH1708/TableLens-Browser-Extension.git
 ```
 
 1. Open `chrome://extensions` in Chrome
@@ -56,8 +56,8 @@ Contributions are very welcome — bug fixes, new export formats, UI improvement
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
-- **Bug reports** → [open an issue](https://github.com/RANJITH1708/TableLens/issues/new?template=bug_report.md)
-- **Feature requests** → [open an issue](https://github.com/RANJITH1708/TableLens/issues/new?template=feature_request.md)
+- **Bug reports** → [open an issue](https://github.com/RANJITH1708/TableLens-Browser-Extension/issues/new?template=bug_report.md)
+- **Feature requests** → [open an issue](https://github.com/RANJITH1708/TableLens-Browser-Extension/issues/new?template=feature_request.md)
 - **Pull requests** → fork the repo, create a branch, and submit a PR
 
 ## License

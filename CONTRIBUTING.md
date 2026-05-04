@@ -11,8 +11,8 @@ Thank you for your interest in contributing! Here is everything you need to get 
 ## Development Setup
 
 ```bash
-git clone https://github.com/RANJITH1708/TableLens.git
-cd TableLens
+git clone https://github.com/RANJITH1708/TableLens-Browser-Extension.git
+cd TableLens-Browser-Extension
 ```
 
 1. Open `chrome://extensions` in Chrome
