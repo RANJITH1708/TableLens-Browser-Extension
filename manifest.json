@@ -1,9 +1,7 @@
 {
-"update_url": "https://clients2.google.com/service/update2/crx",
-
   "manifest_version": 3,
   "name": "TableLens: Edit, Visualize & Export Web Tables",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The Ultimate Web Scraper to Edit, Visualize & Export any Table to Excel, CSV, PDF & More",
   "permissions": [
     "scripting",
@@ -43,8 +41,7 @@
         "injected-ui.css",
         "icon16.png",
         "lib/boxicons.min.css",
-        "lib/boxicons.woff2",
-        "lib/chart.umd.js"
+        "lib/boxicons.woff2"
       ],
       "matches": [
         "<all_urls>"

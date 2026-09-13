@@ -21,14 +21,12 @@ async function clearTabData(tabId) {
 }
 
 // --- GLOBAL STATE ---
-const activeUITabs = new Set();
 let creating; // For offscreen document
 let reloadAndReopenState = {};
 
 
 // --- INITIALIZATION & EVENT LISTENERS ---
 chrome.runtime.onInstalled.addListener(() => {
-    setupOffscreenDocument('offscreen.html');
     chrome.contextMenus.create({
         id: 'supbyte-open',
         title: 'TableLens: Edit, Chart & Export', // MODIFIED
@@ -69,7 +67,12 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 });
 
 async function toggleUI(tab) {
-    if (activeUITabs.has(tab.id)) {
+    // Ask the page, not memory: the service worker forgets everything when it sleeps.
+    const [injection] = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: () => !!document.getElementById('supbyte-ui-iframe')
+    }).catch(() => []);
+    if (injection?.result) {
         await closeInjectedUI(tab.id);
         return;
     }
@@ -103,7 +106,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         tablesReady: async (data) => {
             await setTabData(tabId, { ...data, tabId, frameId: sender.frameId });
             executeScript({ target: { tabId }, func: injectIframe });
-            activeUITabs.add(tabId);
         },
         offscreenTaskComplete: () => {
              chrome.runtime.sendMessage({ action: 'fileGenerated' }).catch(() => {});
@@ -236,7 +238,6 @@ async function closeInjectedUI(tabId) {
             window.dispatchEvent(new CustomEvent('cleanupSupbyte'));
         } 
     });
-    activeUITabs.delete(tabId);
     await clearTabData(tabId);
 }
 

@@ -345,9 +345,9 @@
         if (domObserver) domObserver.disconnect();
         domObserver = new MutationObserver(() => {
             activatePageListeners();
-            const newTableCount = scanForTables().length;
-            if (newTableCount !== pageTables.length) {
-                pageTables = scanForTables();
+            const foundTables = scanForTables();
+            if (foundTables.length !== pageTables.length) {
+                pageTables = foundTables;
                 const updatedData = {
                     tables: pageTables.map((t, index) => ({ index, rows: t.rows?.length || 0, cols: t.rows?.[0]?.cells?.length || 0 }))
                 };
