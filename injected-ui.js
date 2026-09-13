@@ -481,7 +481,8 @@ function populateChartView() {
     }
 
     visibleCols.forEach(column => {
-        columnOptionsHTML += `<option value="${column.originalIndex}">${column.name}</option>`;
+        // Column names come from the web page; serialize through the DOM so they can't inject markup.
+        columnOptionsHTML += new Option(column.name, column.originalIndex).outerHTML;
     });
     
     [labelColumnBarLine, labelColumnPie, dataColumnPie, dataColumnXScatter, dataColumnYScatter].forEach(select => {
@@ -586,12 +587,14 @@ generateChartBtn.onclick = async () => {
 
 
 // --- Listeners & Utility Functions ---
-chrome.runtime.onMessage.addListener(async (request) => {
+// Not async: since Chrome 144 a returned promise counts as a reply, so this frame would
+// answer other TableLens frames' requests with undefined before the service worker could.
+chrome.runtime.onMessage.addListener((request) => {
     if(!request || !request.action) return;
     if (request.action === 'updateSelectionFromPage') {
         if (currentTableIndex !== request.newIndex) {
             currentTableIndex = request.newIndex;
-            await updateTableSelection();
+            updateTableSelection();
         }
     } else if (request.action === 'changeView') {
         switchView(request.view);
@@ -607,7 +610,7 @@ chrome.runtime.onMessage.addListener(async (request) => {
         if (currentTableIndex >= tablesOnPage.length) {
             currentTableIndex = tablesOnPage.length > 0 ? 0 : -1;
         }
-        await updateTableSelection();
+        updateTableSelection();
     }
 });
 
